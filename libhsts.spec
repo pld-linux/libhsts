@@ -41,19 +41,6 @@ sent data will ever be unencrypted.
 %description devel -l pl.UTF-8
 Pliki nagłówkowe i dokumentacja do libhsts.
 
-%description devel -l pt_BR.UTF-8
-Tcpdump imprime os cabeçalhos dos pacotes em uma interface de rede.
-Ele é muito prático para resolver problemas na rede e para operações
-de segurança.
-
-%description devel -l ru.UTF-8
-Хедеры и библиотеки програмиста, необходимые для программирования с
-libhsts.
-
-%description devel -l uk.UTF-8
-Хедери та бібліотеки програміста, необхідні для програмування з
-libhsts.
-
 %package static
 Summary:	Static libhsts library
 Summary(es.UTF-8):	Biblioteca estática usada no desenvolvimento de aplicativos com libhsts
@@ -65,20 +52,7 @@ Group:		Development/Libraries
 Requires:	%{name}-devel = %{?epoch}:%{version}-%{release}
 
 %description static
-Libpcap provides a portable framework for low-level network
-monitoring. Libpcap can provide network statistics collection,
-security monitoring and network debugging. Since almost every system
-vendor provides a different interface for packet capture, the libhsts
-authors created this system-independent API to ease in porting and to
-alleviate the need for several system-dependent packet capture modules
-in each application.
-
-This package contains the static library used for development.
-
-%description static -l pt_BR.UTF-8
-Tcpdump imprime os cabeçalhos dos pacotes em uma interface de rede.
-Ele é muito prático para resolver problemas na rede e para operações
-de segurança.
+Static libhsts library.
 
 %description static -l pl.UTF-8
 Biblioteka statyczna libhsts.
