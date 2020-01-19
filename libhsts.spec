@@ -1,22 +1,22 @@
 #
 # Conditional build:
-%bcond_with	man		# build man pages (requires pandoc)
+%bcond_with	pandoc		# build man pages with pandoc
 %bcond_without	tests		# build without tests
 #
 %ifarch x32
-%undefine	with_man
+%undefine	with_pandoc
 %endif
 Summary:	C library to access the HSTS preload list
 Name:		libhsts
 Version:	0.1.0
-Release:	2
+Release:	3
 License:	BSD
 Group:		Libraries
 Source0:	https://gitlab.com/rockdaboot/libhsts/uploads/4753f61b5a3c6253acf4934217816e3f/%{name}-%{version}.tar.gz
 # Source0-md5:	5599c8b2530df6b26ed5e766a8d9ed3c
 URL:		https://gitlab.com/rockdaboot/libhsts
 BuildRequires:	doxygen
-%{?with_man:BuildRequires:	pandoc}
+%{?with_pandoc:BuildRequires:	pandoc}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -87,6 +87,12 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%if %{without pandoc}
+install -d $RPM_BUILD_ROOT%{_mandir}/man{1,3}
+cp -p docs/man/man1/hsts*.1 $RPM_BUILD_ROOT%{_mandir}/man1
+cp -p docs/man/man3/libhsts.3 $RPM_BUILD_ROOT%{_mandir}/man3
+%endif
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -99,10 +105,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/hsts
 %attr(755,root,root) %{_libdir}/libhsts.so.*.*
 %attr(755,root,root) %ghost %{_libdir}/libhsts.so.0
-%if %{with man}
 %{_mandir}/man1/hsts.1*
 %{_mandir}/man1/hsts-make-dafsa.1*
-%endif
 
 %files devel
 %defattr(644,root,root,755)
@@ -110,9 +114,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/libhsts.h
 %{_libdir}/libhsts.la
 %{_pkgconfigdir}/libhsts.pc
-%if %{with man}
 %{_mandir}/man3/libhsts.3*
-%endif
 
 %files static
 %defattr(644,root,root,755)
