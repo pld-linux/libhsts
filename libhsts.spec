@@ -3,9 +3,6 @@
 %bcond_with	pandoc		# build man pages with pandoc
 %bcond_without	tests		# build without tests
 #
-%ifarch x32
-%undefine	with_pandoc
-%endif
 Summary:	C library to access the HSTS preload list
 Name:		libhsts
 Version:	0.1.0
