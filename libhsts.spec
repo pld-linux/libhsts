@@ -4,11 +4,13 @@
 %bcond_without	tests		# build without tests
 #
 Summary:	C library to access the HSTS preload list
+Summary(pl.UTF-8):	Biblioteka C służąca do dostępu do list wstępnych HSTS
 Name:		libhsts
 Version:	0.1.0
-Release:	3
+Release:	4
 License:	BSD
 Group:		Libraries
+#Source0Download: https://gitlab.com/rockdaboot/libhsts/-/tags
 Source0:	https://gitlab.com/rockdaboot/libhsts/uploads/4753f61b5a3c6253acf4934217816e3f/%{name}-%{version}.tar.gz
 # Source0-md5:	5599c8b2530df6b26ed5e766a8d9ed3c
 URL:		https://gitlab.com/rockdaboot/libhsts
@@ -24,10 +26,18 @@ without trying a plain-text HTTP connection first. It prevents
 interception with redirects that take place over HTTP. None of the
 sent data will ever be unencrypted.
 
+%description -l pl.UTF-8
+Wstępnie ładowana lista HSTS to lista domen obsługujących HTTPS. Lista
+jest składana przez Google i wykorzystywana przez Chrome, Firefoksa i
+inne przeglądarki. Przy użyciu tych informacji klient HTTP może
+połączyć się ze stroną bez próby wcześniejszego nawiązania połączenia
+tekstowego HTTP. Chroni przed przejęciem z przekierowaniem po HTTP.
+Nie są wysyłane żadne niezaszyfrowane dane.
+
 %package devel
-Summary:	Header files and develpment documentation for libhsts
+Summary:	Header files and development documentation for libhsts
 Summary(es.UTF-8):	Arquivos de cabeçalho e bibliotecas de desenvolvimento para libhsts
-Summary(pl.UTF-8):	Pliki nagłówkowe i dokumetacja do libhsts
+Summary(pl.UTF-8):	Pliki nagłówkowe i dokumetacja do biblioteki libhsts
 Summary(pt_BR.UTF-8):	Bibliotecas e arquivos de inclusão para a libhsts
 Summary(ru.UTF-8):	Хедеры и библиотеки програмиста для libhsts
 Summary(uk.UTF-8):	Хедери та бібліотеки програміста для libhsts
@@ -35,15 +45,10 @@ Group:		Development/Libraries
 Requires:	%{name} = %{?epoch}:%{version}-%{release}
 
 %description devel
-The HSTS preload list is a list of domains that support HTTPS. The
-list is compiled by Google and is utilised by Chrome, Firefox and
-others. With this information, a HTTP client may contact a website
-without trying a plain-text HTTP connection first. It prevents
-interception with redirects that take place over HTTP. None of the
-sent data will ever be unencrypted.
+Header files and development documentation for libhsts library.
 
 %description devel -l pl.UTF-8
-Pliki nagłówkowe i dokumentacja do libhsts.
+Pliki nagłówkowe i dokumentacja do biblioteki libhsts.
 
 %package static
 Summary:	Static libhsts library
@@ -90,6 +95,9 @@ cp -p docs/man/man1/hsts*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 cp -p docs/man/man3/libhsts.3 $RPM_BUILD_ROOT%{_mandir}/man3
 %endif
 
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libhsts.la
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -109,7 +117,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libhsts.so
 %{_includedir}/libhsts.h
-%{_libdir}/libhsts.la
 %{_pkgconfigdir}/libhsts.pc
 %{_mandir}/man3/libhsts.3*
 
